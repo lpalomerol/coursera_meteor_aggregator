@@ -1,3 +1,9 @@
+/// Accounts config
+
+Accounts.ui.config({
+  passwordSignupFields: "USERNAME_AND_EMAIL"
+});
+
 /////
 // template helpers 
 /////
@@ -6,6 +12,16 @@
 Template.website_list.helpers({
   websites : function() {
     return Websites.find({});
+  }
+});
+
+Template.welcome.helpers({
+  username: function(){
+    if(Meteor.user()){
+      return Meteor.user().username;
+    } else {
+      return "anonymous user";
+    }
   }
 });
 

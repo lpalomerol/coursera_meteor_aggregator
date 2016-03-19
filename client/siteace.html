@@ -9,17 +9,26 @@
 	    <div class="navbar-header">
 	      <a class="navbar-brand" href="#">
 	        Site Ace
-	      </a>
+	      </a>     
 	    </div>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li>
+	        {{> loginButtons}}
+		   </li>
+	    </ul>
 	  </div>
 	</nav>
 
 	<div class="container">
+	   {{> welcome}}
 		{{> website_form}}
 		{{> website_list}}
 	</div>
 </body>
 
+<template name="welcome">
+  <h1>Welcome to siteace, {{username}}</h1>
+</template>
 
 <template name="website_form">
 	<a class="btn btn-default js-toggle-website-form" href="#">
