@@ -5,6 +5,35 @@ Accounts.ui.config({
 });
 
 /////
+//routing 
+/////
+
+Router.configure({
+  layoutTemplate: 'ApplicationLayout'
+});
+
+Router.route('/', function(){
+  this.render('navbar', {
+    to:'navbar'
+  });
+  this.render('index', {
+    to:'main'
+  });
+})
+
+Router.route('/website/:_id', function(){
+  this.render('navbar', {
+    to:'navbar'
+  });
+  this.render('website_detail', {
+    to:'main',
+    data: function(){
+      return Websites.findOne({_id: this.params._id})
+    }
+  });
+})
+
+/////
 // template helpers 
 /////
 
