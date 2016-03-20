@@ -69,9 +69,12 @@
 <template name="website_item">
 <li>
 	<a href="{{url}}">{{title}}</a>
-	<p>
-		{{description}}
-	</p>
+   <p>
+      {{description}}
+   </p>
+   <p>
+      Created at: {{formatDate createdOn}}, Votes: {{votes}}
+   </p>
 	<a href="#" class="btn btn-default js-upvote">
 		<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
 	</a>
