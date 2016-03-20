@@ -15,7 +15,7 @@
    <nav class="navbar navbar-default">
      <div class="container-fluid">
        <div class="navbar-header">
-         <a class="navbar-brand" href="#">
+         <a class="navbar-brand" href="/">
            Site Ace
          </a>     
        </div>
@@ -43,15 +43,57 @@
 <template name="website_detail">
    <div class="container">
       <h1>Site {{title}} details</h1>
-      <ul>
-        <li> <b>Title:</b> <a href="{{url}}">{{title}}</a></li>
-        <li> <b>Description:</b> {{description}}</li>
-        <li> <b>Created On:</b> {{createdOn}}</li>
-        <li> <b>Votes:</b> {{votes}}</li>
-      </ul>
+      {{> website_info}}
+      {{> website_comments siteId=_id}}
    </div>
 </template>
 
+<template name="website_info">
+   <ul>
+     <li> <b>Title:</b> <a href="{{url}}">{{title}}</a></li>
+     <li> <b>Description:</b> {{description}}</li>
+     <li> <b>Created on:</b> {{createdon}}</li>
+     <li> <b>Votes:</b> {{votes}}</li>
+   </ul>
+</template>
+
+<template name="website_comments">
+ <h2>Comments</h2> 
+ {{#if hasComments siteId}}
+   {{#each comments siteId}}
+    <b>Comment</b>
+    <p>
+      <i>{{comment}}</i>
+    </p>
+    <p> 
+      by {{author}} at {{formatDate createdOn}}
+    </p>
+    {{/each}}
+ {{else}}
+   There are not comments yet! 
+ {{/if}}
+ 
+ <p>
+   {{#if isLogged}}
+     {{> website_comments_form}}
+   {{/if}}
+ </p>
+</template>
+
+<template name="website_comments_form">
+  <div>
+   <h3>Add a comment</h3>
+   <form class="js-add-comment-form">
+     <div class="form-group">
+       <label for="comment">Comment</label>
+       <input type="textarea" class="form-control" id="comment" placeholder="..."/>
+     </div>
+     <p>
+     <button type="submit" class="btn btn-default">Submit</button>
+     </p>
+   </form>  
+  </div>
+</template>
 
 <template name="welcome">
   <h1>Welcome to siteace, {{username}}</h1>
