@@ -11,7 +11,7 @@
 	        Site Ace
 	      </a>     
 	    </div>
-	    <ul class="nav navbar-nav navbar-right">
+	    <ul class="nav navbar-nav navbar-left">
 	      <li>
 	        {{> loginButtons}}
 		   </li>
@@ -20,8 +20,10 @@
 	</nav>
 
 	<div class="container">
-	   {{> welcome}}
-		{{> website_form}}
+	   {{> welcome}}		
+		{{#if isLogged}}
+		  {{> website_form}}  
+		{{/if}}
 		{{> website_list}}
 	</div>
 </body>
