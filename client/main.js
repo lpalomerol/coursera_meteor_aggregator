@@ -14,13 +14,6 @@ Template.body.helpers({
   }
 });
 
-// helper function that returns all available websites
-Template.website_list.helpers({
-  websites : function() {
-    return Websites.find({});
-  }
-});
-
 Template.welcome.helpers({
   username: function(){
     if(Meteor.user()){
@@ -31,28 +24,39 @@ Template.welcome.helpers({
   }
 });
 
+// helper function that returns all available websites
+Template.website_list.helpers({
+  websites : function() {
+    return Websites.find({},{sort:{votes: -1}});
+  }
+});
+
+Template.website_item.helpers({
+  formatDate: function(date){
+    var curr_date = date.getDate();
+    var curr_month = date.getMonth() + 1; //Months are zero based
+    var curr_year = date.getFullYear();
+    return (curr_date + "-" + curr_month + "-" + curr_year);  
+  }
+});
+
 // ///
 // template events
 // ///
 
 Template.website_item.events({
   "click .js-upvote" : function(event) {
-    // example of how you can access the id for the website in the database
-    // (this is the data context for the template)
-    var website_id = this._id;
-    console.log("Up voting website with id " + website_id);
-    // put the code in here to add a vote to a website!
+    var websiteId = this._id;
+    
+    Websites.voteUp(websiteId);
 
     return false;// prevent the button from reloading the page
   },
   "click .js-downvote" : function(event) {
 
-    // example of how you can access the id for the website in the database
-    // (this is the data context for the template)
-    var website_id = this._id;
-    console.log("Down voting website with id " + website_id);
-
-    // put the code in here to remove a vote from a website!
+    var websiteId = this._id;
+    
+    Websites.voteDown(websiteId); 
 
     return false;// prevent the button from reloading the page
   }
