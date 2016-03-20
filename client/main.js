@@ -40,7 +40,7 @@ function dateFormatter(date){
   return (curr_date + "-" + curr_month + "-" + curr_year);
 }
 
-function isLogged(){
+function checkIsLogged(){
   return Meteor.user()
 }
 
@@ -48,8 +48,8 @@ function isLogged(){
 // template helpers 
 /////
 
-Template.body.helpers({
-  isLogged: isLogged
+Template.index.helpers({
+  isLogged: checkIsLogged
 });
 
 Template.welcome.helpers({
@@ -81,7 +81,7 @@ Template.website_comments.helpers({
     return Comments.find({siteId: siteId}).count() > 0;
   },
   formatDate: dateFormatter,
-  isLogged: isLogged
+  isLogged: checkIsLogged
 });
 
 // ///
