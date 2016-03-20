@@ -42,16 +42,25 @@
 
 <template name="website_detail">
    <div class="container">
+      
       <h1>Site {{title}} details</h1>
-      <ul>
-        <li> <b>Title:</b> <a href="{{url}}">{{title}}</a></li>
-        <li> <b>Description:</b> {{description}}</li>
-        <li> <b>Created On:</b> {{createdOn}}</li>
-        <li> <b>Votes:</b> {{votes}}</li>
-      </ul>
+      {{> website_info}}
+      {{> website_comments}}
    </div>
 </template>
 
+<template name="website_info">
+   <ul>
+     <li> <b>Title:</b> <a href="{{url}}">{{title}}</a></li>
+     <li> <b>Description:</b> {{description}}</li>
+     <li> <b>Created On:</b> {{createdOn}}</li>
+     <li> <b>Votes:</b> {{votes}}</li>
+   </ul>
+</template>
+
+<template name="website_comments">
+ No comments yet
+</template>
 
 <template name="welcome">
   <h1>Welcome to siteace, {{username}}</h1>
