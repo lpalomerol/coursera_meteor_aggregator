@@ -8,6 +8,12 @@ Accounts.ui.config({
 // template helpers 
 /////
 
+Template.body.helpers({
+  isLogged: function(){
+    return Meteor.user();
+  }
+});
+
 // helper function that returns all available websites
 Template.website_list.helpers({
   websites : function() {
@@ -57,13 +63,11 @@ Template.website_form.events({
     $("#website_form").toggle('slow');
   },
   "submit .js-save-website-form" : function(event) {
-
-    // here is an example of how to get the url out of the form:
-    var url = event.target.url.value;
-    console.log("The url they entered is: " + url);
-
-    // put your website saving code in here!
-
+ 
+    Websites.push(event.target.url.value, 
+                  event.target.title.value,
+                  event.target.description.value);
+    alert('New site [' + event.target.title.value + '] added');
     return false;// stop the form submit from reloading the page
 
   }
