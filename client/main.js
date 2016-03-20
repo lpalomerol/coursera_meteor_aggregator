@@ -33,14 +33,23 @@ Router.route('/website/:_id', function(){
   });
 })
 
+function dateFormatter(date){
+  var curr_date = date.getDate();
+  var curr_month = date.getMonth() + 1; //Months are zero based
+  var curr_year = date.getFullYear();
+  return (curr_date + "-" + curr_month + "-" + curr_year);
+}
+
+function isLogged(){
+  return Meteor.user()
+}
+
 /////
 // template helpers 
 /////
 
 Template.body.helpers({
-  isLogged: function(){
-    return Meteor.user();
-  }
+  isLogged: isLogged
 });
 
 Template.welcome.helpers({
@@ -61,12 +70,18 @@ Template.website_list.helpers({
 });
 
 Template.website_item.helpers({
-  formatDate: function(date){
-    var curr_date = date.getDate();
-    var curr_month = date.getMonth() + 1; //Months are zero based
-    var curr_year = date.getFullYear();
-    return (curr_date + "-" + curr_month + "-" + curr_year);  
-  }
+  formatDate: dateFormatter
+});
+
+Template.website_comments.helpers({
+  comments: function(siteId){
+    return Comments.find({siteId: siteId});
+  },
+  hasComments: function(siteId){
+    return Comments.find({siteId: siteId}).count() > 0;
+  },
+  formatDate: dateFormatter,
+  isLogged: isLogged
 });
 
 // ///
@@ -96,12 +111,19 @@ Template.website_form.events({
     $("#website_form").toggle('slow');
   },
   "submit .js-save-website-form" : function(event) {
- 
-    Websites.push(event.target.url.value, 
-                  event.target.title.value,
+   
+    Websites.push(event.target.title.value,
+                  event.target.url.value,
                   event.target.description.value);
     alert('New site [' + event.target.title.value + '] added');
     return false;// stop the form submit from reloading the page
 
+  }
+});
+
+Template.website_comments_form.events({
+  "submit .js-add-comment-form": function(event){
+    Comments.push(this.siteId, Meteor.user().username, event.target.comment.value);
+    return false;
   }
 });
